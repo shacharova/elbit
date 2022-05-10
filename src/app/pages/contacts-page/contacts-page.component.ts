@@ -12,7 +12,7 @@ export class ContactsComponent implements OnInit {
   constructor(private state: ContactsStateService) { }
 
   ngOnInit(): void {
-    
+    this.state.loadContacts();
   }
 
 }
