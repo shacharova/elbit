@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AppStateService } from 'src/app/services/states/app-state.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
+  public isRTL$ = this.state.isRTL.value$;
+
+  public constructor(private state: AppStateService) {
+    
+  }
 }
