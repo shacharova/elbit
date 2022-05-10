@@ -13,7 +13,7 @@ export class ContactsApiService {
   }
 
   public readContacts(): Observable<IContact[]> {
-    return of([]);
+    return of([{ id: 1, firstName: 'שחר', lastName: 'עובדיה', birthDate: new Date(1987, 7, 15) }]);
   }
 
   public createContact(contact: IContact): Observable<IContact> {
