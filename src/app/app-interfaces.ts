@@ -1,15 +1,17 @@
 export interface IEnvironment {
     production: boolean;
     contactsApiBaseUrl: string;
-    firebaseConfig: IFirebaseConfig;
+    firebase: IFirebaseConfig;
 }
 export interface IFirebaseConfig {
     apiKey: string;
     authDomain: string;
+    databaseURL: string;
     projectId: string;
     storageBucket: string;
     messagingSenderId: string;
     appId: string;
+    locationId: string;
 }
 
 export interface IContact {
