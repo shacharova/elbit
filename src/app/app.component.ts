@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AppStateService } from 'src/app/services/states/app-state.service';
+import { ChangeDetectionStrategy, Component, OnInit, Renderer2 } from '@angular/core';
+import { distinctUntilChanged } from 'rxjs';
+import { AppQuery } from 'src/app/services/states/app.state';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +8,20 @@ import { AppStateService } from 'src/app/services/states/app-state.service';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
-  public isRTL$ = this.state.isRTL.value$;
+export class AppComponent implements OnInit {
+  public constructor(private state: AppQuery, private renderer: Renderer2) { }
 
-  public constructor(private state: AppStateService) {
-    
+  ngOnInit(): void {
+    this.handleIsRTLChanged();
+  }
+
+  private handleIsRTLChanged() {
+    this.state.isRTL$.pipe(distinctUntilChanged()).subscribe((isRTL) => {
+      if (isRTL) {
+        this.renderer.addClass(document.querySelector('html'), 'dx-rtl');
+      } else {
+        this.renderer.removeClass(document.querySelector('html'), 'dx-rtl');
+      }
+    });
   }
 }

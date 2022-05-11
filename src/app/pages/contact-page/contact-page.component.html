@@ -1,1 +1,37 @@
-<p>contact works!</p>
+<ng-container *ngIf="contact$ | async as contact ; else noContact">
+    <div *ngIf="isEditing$ | async ; else readOnlyTemplate">
+        Editing...
+    </div>
+    <ng-template #readOnlyTemplate>
+        <div class="contact-header">
+            <div class="prev">
+                <dx-button icon="back" stylingMode="text" [routerLink]="['/contacts']"></dx-button>
+            </div>
+            <div class="picture">
+                <img *ngIf="contact.pictureSrc" [src]="contact.pictureSrc" />
+                <span *ngIf="!contact.pictureSrc">{{contact.firstName[0]}}{{contact.lastName?.[0]}}</span>
+            </div>
+            <div class="details">
+                <span class="full-name">{{contact.firstName}} {{contact.lastName}}</span>
+            </div>
+            <div class="actions">
+                <dx-button text="עריכה" type="default" stylingMode="contained"
+                    [routerLink]="'/contact/' + contact.id" [queryParams]="{isEditing: 1}">
+                </dx-button>
+            </div>
+        </div>
+
+        <div class="">
+
+        </div>
+    </ng-template>
+</ng-container>
+
+<ng-template #noContact>
+    <div *ngIf="isLoading$ | async ; else notLoading" class="loading">
+        Loading...
+    </div>
+    <ng-template #notLoading>
+        No contact
+    </ng-template>
+</ng-template>

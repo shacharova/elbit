@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { ContactPageRoutingModule } from './contact-page-routing.module';
 import { ContactComponent } from './contact-page.component';
+import { DxButtonModule } from 'devextreme-angular';
+
 
 
 @NgModule({
@@ -11,7 +13,11 @@ import { ContactComponent } from './contact-page.component';
   ],
   imports: [
     CommonModule,
-    ContactPageRoutingModule
+    ContactPageRoutingModule,
+    DxButtonModule
+  ],
+  providers: [
+
   ]
 })
 export class ContactPageModule { }

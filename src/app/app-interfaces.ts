@@ -1,6 +1,5 @@
 export interface IEnvironment {
     production: boolean;
-    contactsApiBaseUrl: string;
     firebase: IFirebaseConfig;
 }
 export interface IFirebaseConfig {
@@ -14,10 +13,3 @@ export interface IFirebaseConfig {
     locationId: string;
 }
 
-export interface IContact {
-    id: string | number;
-    firstName: string;
-    lastName: string;
-    birthDate?: Date;
-    created?: Date
-}

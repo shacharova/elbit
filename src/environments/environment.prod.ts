@@ -12,5 +12,4 @@ export const environment: IEnvironment = {
     messagingSenderId: '238811088680',
   },
   production: true,
-  contactsApiBaseUrl: ''
 };

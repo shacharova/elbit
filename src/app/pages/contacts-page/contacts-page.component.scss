@@ -1,0 +1,17 @@
+.picture {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    border-radius: 50%;
+    background: #624545;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+    border: 1px solid #545454;
+    margin-inline-end: 20px;
+}
+
+.full-name {
+    font-weight: bold;
+}

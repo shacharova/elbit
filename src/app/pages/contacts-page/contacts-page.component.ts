@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ContactsStateService } from 'src/app/services/states/contacts-state.service';
+import { IContact } from 'src/app/services/states/contact.state';
+import { ContactsQuery } from 'src/app/services/states/contacts.state';
 
 @Component({
   templateUrl: './contacts-page.component.html',
@@ -7,12 +8,31 @@ import { ContactsStateService } from 'src/app/services/states/contacts-state.ser
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactsComponent implements OnInit {
-  public contacts$ = this.state.contants.value$;
+  private selectedContactId?: string;
+  
+  public isShowDeleteConfirm: boolean = false;
 
-  constructor(private state: ContactsStateService) { }
+  public contacts$ = this.state.select(s => s.contacts)
+
+  constructor(private state: ContactsQuery) { }
 
   ngOnInit(): void {
     this.state.loadContacts();
   }
 
+  public onTrashClick(contactId: string) {
+    this.selectedContactId = contactId;
+    this.isShowDeleteConfirm = true;
+  }
+  public onDeleteContactConfirmed() {
+    if (this.selectedContactId) {
+      this.isShowDeleteConfirm = false;
+      this.state.deleteContact(this.selectedContactId);
+      this.selectedContactId = undefined;
+    }
+  }
+
+  public calcNameColumnValue(contact: IContact) {
+    return [contact.firstName, contact.lastName].join(' ');
+  }
 }

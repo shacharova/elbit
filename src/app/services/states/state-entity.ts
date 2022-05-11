@@ -26,15 +26,6 @@ export class StateArray<T> extends StateEntity<T[]> {
         this.equal = equalFunc || ((v1: T, v2: T) => v1 === v2);
     }
 
-    public find(value: T): T | undefined {
-        const values = this.getValue();
-        return values.find((v => this.equal(v, value)));
-    }
-    public findIndex(value: T): number {
-        const values = this.getValue();
-        return values.findIndex((v => this.equal(v, value)));
-    }
-
     public push(...newValues: T[]) {
         const values = this.getValue();
         values.push(...newValues);

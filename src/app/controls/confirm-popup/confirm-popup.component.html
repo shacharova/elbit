@@ -1,0 +1,22 @@
+<dx-popup #popup [width]="400" height="auto" [showTitle]="true" [title]="title" [dragEnabled]="false"
+    shadingColor="rgba(0, 0, 0, 0.5)" (onShown)="cancelButton?.instance?.focus()" (onHidden)="onCancel.emit()"
+    [showTitle]="title ? true : false" [visible]="visible" [closeOnOutsideClick]="true" [showCloseButton]="false"
+    container=".dx-viewport">
+
+    <!-- <dxo-position at="center" my="center" of="body"> </dxo-position> -->
+    <div *dxTemplate="let data of 'content'">
+        <ng-container [ngTemplateOutlet]="contentTemplate || defaultTemplate"
+            [ngTemplateOutletContext]="{$implicit: message}">
+        </ng-container>
+        <div class="actions">
+            <dx-button #cancelButton stylingMode="text" [text]="cancelText" (onClick)="popup.instance.hide()"
+                [focusStateEnabled]="true"></dx-button>
+
+            <dx-button stylingMode="text" type="danger" [text]="okText" (onClick)="onOk.emit()"></dx-button>
+        </div>
+    </div>
+</dx-popup>
+
+<ng-template #defaultTemplate>
+    <span class="message">{{message}}</span>
+</ng-template>

@@ -1,0 +1,38 @@
+.contact-header {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid #cdcdcd;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    .picture {
+        width: 126px;
+        height: 126px;
+        display: inline-flex;
+        border-radius: 50%;
+        background: #624545;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        color: white;
+        border: 1px solid #545454;
+        margin-inline-end: 20px;
+        font-size: 60px
+    }
+
+    .details {
+        display: flex;
+        align-items: center;
+
+        .full-name {
+            font-size: 28px;
+        }
+    }
+
+    .actions {
+        display: flex;
+        flex-grow: 1;
+        align-items: end;
+        justify-content: flex-end;
+    }
+}

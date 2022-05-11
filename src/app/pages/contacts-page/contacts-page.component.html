@@ -1,4 +1,35 @@
-<p>contacts works!</p>
-<div class="contacts" *ngFor="let contact of contacts$ | async">
+<div>אנשי הקשר שלי</div>
+<dx-data-grid *ngIf="contacts$ | async as contacts" [dataSource]="contacts" height="100%"
+    noDataText="אין אנשים" [showBorders]="false">
+    <dxo-search-panel [visible]="true" [width]="340" placeholder="חיפוש..."></dxo-search-panel>
     
-</div>
+    <dxi-column cellTemplate="nameCellTemplate" alignment="start" caption="שם" [allowSearch]="true"
+        [calculateCellValue]="calcNameColumnValue"></dxi-column>
+    <dxi-column dataField="birthDate" dataType="date" format="dd/MM/yyyy" caption="תאריך לידה" alignment="start"
+        [allowSearch]="false">
+    </dxi-column>
+    <dxi-column caption="" cellTemplate="actionsCellTemplate" [width]="80" [allowSearch]="false"></dxi-column>
+
+    <div *dxTemplate="let cell of 'nameCellTemplate'">
+        <span class="picture">
+            <img *ngIf="cell.data.pictureSrc" [src]="cell.data.pictureSrc" />
+            <span *ngIf="!cell.data.pictureSrc">{{cell.data.firstName[0]}}{{cell.data.lastName[0]}}</span>
+        </span>
+        <span class="full-name">{{cell.data.firstName}} {{cell.data.lastName}}</span>
+    </div>
+
+    <div *dxTemplate="let cell of 'actionsCellTemplate'">
+        <dx-button icon="edit" stylingMode="text" [routerLink]="['/contact/' + cell.data.id]" [queryParams]="{edit: 1}">
+        </dx-button>
+        <dx-button icon="trash" [activeStateEnabled]="false" stylingMode="text" (onClick)="onTrashClick(cell.data.id)">
+        </dx-button>
+    </div>
+</dx-data-grid>
+
+<confirm-popup [visible]="isShowDeleteConfirm" (onCancel)="isShowDeleteConfirm = false"
+    (onOk)="onDeleteContactConfirmed()" okText="מחיקה" [contentTemplate]="confirmMessageTemplate"
+    message="האם למחוק את איש הקשר הזה?">
+    <ng-template #confirmMessageTemplate let-message>
+        <span>{{message}}</span>
+    </ng-template>
+</confirm-popup>
