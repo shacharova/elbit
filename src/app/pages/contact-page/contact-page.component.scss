@@ -32,7 +32,11 @@
     .actions {
         display: flex;
         flex-grow: 1;
-        align-items: end;
+        align-items: flex-end;
         justify-content: flex-end;
     }
+}
+
+.contact-details {
+    padding: 20px;
 }

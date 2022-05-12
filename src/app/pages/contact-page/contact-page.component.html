@@ -1,30 +1,33 @@
 <ng-container *ngIf="contact$ | async as contact ; else noContact">
-    <div *ngIf="isEditing$ | async ; else readOnlyTemplate">
-        Editing...
-    </div>
-    <ng-template #readOnlyTemplate>
-        <div class="contact-header">
-            <div class="prev">
-                <dx-button icon="back" stylingMode="text" [routerLink]="['/contacts']"></dx-button>
-            </div>
-            <div class="picture">
-                <img *ngIf="contact.pictureSrc" [src]="contact.pictureSrc" />
-                <span *ngIf="!contact.pictureSrc">{{contact.firstName[0]}}{{contact.lastName?.[0]}}</span>
-            </div>
-            <div class="details">
-                <span class="full-name">{{contact.firstName}} {{contact.lastName}}</span>
-            </div>
-            <div class="actions">
+    <div class="contact-header">
+        <div class="prev">
+            <dx-button icon="back" stylingMode="text" [routerLink]="['/contacts']"></dx-button>
+        </div>
+        <div class="picture">
+            <img *ngIf="contact.pictureSrc" [src]="contact.pictureSrc" />
+            <span *ngIf="!contact.pictureSrc">{{contact.firstName[0]}}{{contact.lastName?.[0]}}</span>
+        </div>
+        <div class="details">
+            <span class="full-name">{{contact.firstName}} {{contact.lastName}}</span>
+        </div>
+        <div class="actions">
+            <dx-button *ngIf="isEditing$ | async ; else editButtonTemplate" text="שמירה" type="default"
+                stylingMode="contained" (onClick)="onSaveClicked($event)">
+            </dx-button>
+
+            <ng-template #editButtonTemplate>
                 <dx-button text="עריכה" type="default" stylingMode="contained"
                     [routerLink]="'/contact/' + contact.id" [queryParams]="{isEditing: 1}">
                 </dx-button>
-            </div>
+            </ng-template>
         </div>
+    </div>
 
-        <div class="">
-
-        </div>
-    </ng-template>
+    <div class="contact-details">
+        <dx-form [formData]="editableContact" [readOnly]="false" labelMode="floating"
+            [minColWidth]="150" [colCount]="2" [disabled]="(isEditing$ | async) ? true : false" (onFieldDataChanged)="onContactFieldChanged($event)">
+        </dx-form>
+    </div>
 </ng-container>
 
 <ng-template #noContact>

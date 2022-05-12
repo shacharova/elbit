@@ -7,7 +7,7 @@ import { DxButtonComponent } from 'devextreme-angular';
   styleUrls: ['./confirm-popup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ConfirmPopupComponent implements OnInit, OnChanges {
+export class ConfirmPopupComponent implements OnInit {
   @Input() title: string = '';
   @Input() message: string = '';
   @Input() visible: boolean = false;
@@ -21,10 +21,6 @@ export class ConfirmPopupComponent implements OnInit, OnChanges {
   @ViewChild("cancelButton", { static: false }) public cancelButton?: DxButtonComponent;
 
   constructor() { }
-  ngOnChanges(changes: SimpleChanges): void {
-    
-    console.log(changes);
-  }
 
   ngOnInit(): void {
   }

@@ -1,7 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
-import { ContactQuery } from 'src/app/services/states/contact.state';
+import DevExpress from 'devextreme';
+import { distinctUntilChanged, map, Subject, takeUntil, tap } from 'rxjs';
+import { ContactQuery, IContact } from 'src/app/services/states/contact.state';
 import { ContactsQuery } from 'src/app/services/states/contacts.state';
 
 @Component({
@@ -20,7 +21,10 @@ export class ContactComponent implements OnInit, OnDestroy {
   public isLoading$ = this.state.selectLoading();
   public isEditing$ = this.state.select(s => s.isEditing);
   public error$ = this.state.selectError();
-  public contact$ = this.state.select(s => s.contact);
+  public editableContact?: Partial<IContact>;
+  public contact$ = this.state.select(s => s.contact).pipe(
+    tap(contact => { this.editableContact = this.parseEditableContact(contact); })
+  );
 
 
 
@@ -40,7 +44,16 @@ export class ContactComponent implements OnInit, OnDestroy {
     this.destroySubject$.unsubscribe();
   }
 
-
+  private parseEditableContact(contact?: IContact): Partial<IContact> | undefined {
+    if (contact) {
+      return { 
+        firstName: contact.firstName,
+        lastName: contact.lastName,
+        birthDate: contact.birthDate 
+      };
+    }
+    return undefined
+  }
   private setContactById(newContactId: string) {
     const contactId = this.state.getValue().contact?.id;
     if (!contactId || contactId !== newContactId) {
@@ -52,6 +65,15 @@ export class ContactComponent implements OnInit, OnDestroy {
         this.state.loadContact(newContactId);
       }
     }
+  }
+
+
+  public onContactFieldChanged(event: DevExpress.ui.dxForm.FieldDataChangedEvent) {
+    debugger;
+  }
+
+  public onSaveClicked(event: DevExpress.ui.dxButton.ClickEvent) {
+    debugger;
   }
 
 }

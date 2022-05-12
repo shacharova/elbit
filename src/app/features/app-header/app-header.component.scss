@@ -1,0 +1,25 @@
+:host {
+    display: block;
+    padding: 10px;
+}
+.title {
+    display: flex;
+
+    .menu-icon {
+        font-size: 22px;
+        border-radius: 50%;
+        margin-left: 10px;
+    }
+    
+    .user-icon {
+        border-radius: 50%;
+        margin-left: 10px;
+    }
+
+    .text {
+        font-size: 22px;
+        color: #5f6368;
+        display: flex;
+        align-items: center;
+    }
+}

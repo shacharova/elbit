@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ContactPageRoutingModule } from './contact-page-routing.module';
 import { ContactComponent } from './contact-page.component';
-import { DxButtonModule } from 'devextreme-angular';
+import { DxButtonModule, DxFormModule } from 'devextreme-angular';
 
 
 
@@ -14,7 +14,8 @@ import { DxButtonModule } from 'devextreme-angular';
   imports: [
     CommonModule,
     ContactPageRoutingModule,
-    DxButtonModule
+    DxButtonModule,
+    DxFormModule
   ],
   providers: [
 

@@ -15,3 +15,14 @@
 .full-name {
     font-weight: bold;
 }
+
+::ng-deep .dx-datagrid-rowsview .dx-data-row:hover {
+    background: #f5f5f5;
+    cursor: pointer;
+}
+::ng-deep .dx-datagrid-rowsview .dx-data-row .actions {
+    visibility: hidden;
+}
+::ng-deep .dx-datagrid-rowsview .dx-data-row:hover .actions {
+    visibility: visible;
+}
