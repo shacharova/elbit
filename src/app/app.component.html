@@ -1,6 +1,9 @@
-
 <div>
     <app-header></app-header>
     <router-outlet></router-outlet>
     <app-footer></app-footer>
 </div>
+<ng-container *ngIf="toast$ | async as toast">
+    <dx-toast [visible]="true" [type]="toast.type" [message]="toast.message">
+    </dx-toast>
+</ng-container>

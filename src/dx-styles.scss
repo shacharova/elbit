@@ -1,7 +1,33 @@
-.dx-datagrid-header-panel, .dx-datagrid-rowsview, .dx-datagrid-headers { 
-    border: none !important;
+// .dx-datagrid-header-panel, .dx-datagrid-rowsview, .dx-datagrid-headers { 
+//     border: none !important;
+// }
+// dx-data-grid td {
+//     border-left: none !important;
+//     border-right: none !important;
+// }
+.dx-datagrid-header-panel {
+    border-bottom: none;
 }
-dx-data-grid td {
-    border-left: none !important;
-    border-right: none !important;
+.dx-datagrid-headers {
+    border-bottom: none;
+}
+.dx-datagrid .dx-column-lines > td {
+    border: none;
+}
+.dx-rtl .dx-datagrid .dx-column-lines > td:first-child {
+    border-left: none;
+}
+.dx-rtl .dx-datagrid .dx-column-lines > td:last-child {
+    border-right: none;
+}
+.dx-datagrid-headers .dx-datagrid-table .dx-row > td {
+    border-bottom: none;
+}
+.dx-datagrid-content .dx-datagrid-table .dx-row > td,
+.dx-datagrid-content .dx-datagrid-table .dx-row > tr > td {
+    vertical-align: middle;
+}
+.dx-datagrid-rowsview .dx-row {
+    border-top: none;
+    border-bottom: none;
 }

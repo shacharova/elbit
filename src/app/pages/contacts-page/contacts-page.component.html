@@ -19,9 +19,10 @@
     </div>
 
     <div *dxTemplate="let cell of 'actionsCellTemplate'" class="actions">
-        <dx-button icon="edit" stylingMode="text" [routerLink]="['/contact/' + cell.data.id]" [queryParams]="{edit: 1}">
+        <dx-button icon="edit" stylingMode="text" (onClick)="onEditClick(cell.data.id, $event)">
         </dx-button>
-        <dx-button icon="trash" [activeStateEnabled]="false" stylingMode="text" (onClick)="onTrashClick(cell.data.id, $event)">
+        <dx-button icon="trash" [activeStateEnabled]="false" stylingMode="text"
+            (onClick)="onTrashClick(cell.data.id, $event)">
         </dx-button>
     </div>
 </dx-data-grid>

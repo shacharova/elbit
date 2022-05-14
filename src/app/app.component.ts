@@ -9,6 +9,9 @@ import { AppQuery } from 'src/app/services/states/app.state';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
+  public isRTL$ = this.state.select(s => s.isRTL);
+  public toast$ = this.state.select(s => s.toast);
+  
   public constructor(private state: AppQuery, private renderer: Renderer2) { }
 
   ngOnInit(): void {
@@ -16,7 +19,7 @@ export class AppComponent implements OnInit {
   }
 
   private handleIsRTLChanged() {
-    this.state.isRTL$.pipe(distinctUntilChanged()).subscribe((isRTL) => {
+    this.isRTL$.pipe(distinctUntilChanged()).subscribe((isRTL) => {
       if (isRTL) {
         this.renderer.addClass(document.querySelector('html'), 'dx-rtl');
       } else {

@@ -4,6 +4,11 @@ import { Query } from '@datorama/akita';
 
 export interface AppState {
     isRTL: boolean;
+    toast?: IToast
+}
+export interface IToast {
+    message: string;
+    type: 'info' | 'success' | 'error';
 }
 
 @StoreConfig({ name: 'app' })
@@ -14,12 +19,26 @@ export class AppStore extends Store<AppState> {
     }
 }
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AppQuery extends Query<AppState> {
-    allState$ = this.select();
-    isRTL$ = this.select(state => state.isRTL);
+    private toastId?: ReturnType<typeof setTimeout>;
 
     constructor(protected override store: AppStore) {
         super(store);
+    }
+
+    public setToast(message: string, type: 'info' | 'success' | 'error', duration: number = NaN) {
+        if (this.toastId) {
+            clearTimeout(this.toastId);
+        }
+        const currentState = this.store.getValue();
+
+        this.store.update({ ...currentState, toast: { message, type } })
+
+        if (duration > 0) {
+            this.toastId = setTimeout(() => {
+                this.store.update({ ...currentState, toast: undefined })
+            }, duration);
+        }
     }
 }

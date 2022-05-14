@@ -22,8 +22,12 @@ export class ContactsComponent implements OnInit {
     this.state.loadContacts();
   }
 
+  public onEditClick(contactId: string, dxEvent: DevExpress.ui.dxButton.ClickEvent) {
+    dxEvent?.event?.stopPropagation();
+    this.router.navigate([`/contact/${contactId}`], { queryParams: { edit: 1 } });
+  }
   public onTrashClick(contactId: string, dxEvent: DevExpress.ui.dxButton.ClickEvent) {
-    dxEvent?.event?.stopPropagation()
+    dxEvent?.event?.stopPropagation();
     this.selectedContactId = contactId;
     this.isShowDeleteConfirm = true;
   }

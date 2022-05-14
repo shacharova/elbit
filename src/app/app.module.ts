@@ -11,6 +11,8 @@ import { ContactQuery, ContactStore } from 'src/app/services/states/contact.stat
 import { ContactsQuery, ContactsStore } from 'src/app/services/states/contacts.state';
 import { AppFooterModule } from 'src/app/features/app-footer/app-footer.module';
 import { AppHeaderModule } from 'src/app/features/app-header/app-header.module';
+import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
+import { DxToastModule } from 'devextreme-angular';
 
 @NgModule({
   declarations: [
@@ -21,8 +23,10 @@ import { AppHeaderModule } from 'src/app/features/app-header/app-header.module';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AkitaNgRouterStoreModule,
     AppHeaderModule,
-    AppFooterModule
+    AppFooterModule,
+    DxToastModule
   ],
   providers: [
     AppStore,
