@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, Renderer2 } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { distinctUntilChanged } from 'rxjs';
 import { AppQuery } from 'src/app/services/states/app.state';
 
@@ -11,7 +11,11 @@ import { AppQuery } from 'src/app/services/states/app.state';
 export class AppComponent implements OnInit {
   public isRTL$ = this.state.select(s => s.isRTL);
   public toast$ = this.state.select(s => s.toast);
-  
+
+  @HostListener('window:resize') onWindowResize() {
+    this.state.notifyWindowSizeChanged();
+  }
+
   public constructor(private state: AppQuery, private renderer: Renderer2) { }
 
   ngOnInit(): void {
