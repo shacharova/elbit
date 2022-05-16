@@ -4,7 +4,9 @@ import { Query } from '@datorama/akita';
 
 export interface AppState {
     isRTL: boolean;
-    toast?: IToast
+    toast?: IToast;
+    screenWidth: number;
+    screenHeight: number;
 }
 export interface IToast {
     message: string;
@@ -14,7 +16,11 @@ export interface IToast {
 @StoreConfig({ name: 'app' })
 export class AppStore extends Store<AppState> {
     constructor() {
-        const initState: AppState = { isRTL: true };
+        const initState: AppState = {
+            isRTL: true,
+            screenWidth: window.innerWidth,
+            screenHeight: window.innerHeight
+        };
         super(initState);
     }
 }
@@ -40,5 +46,10 @@ export class AppQuery extends Query<AppState> {
                 this.store.update({ ...currentState, toast: undefined })
             }, duration);
         }
+    }
+
+    public notifyWindowSizeChanged() {
+        const currentState = this.store.getValue();
+        this.store.update({ ...currentState, screenWidth: window.innerWidth, screenHeight: window.innerHeight });
     }
 }
