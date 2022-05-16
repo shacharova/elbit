@@ -1,4 +1,3 @@
-<!-- (onRowClick)="onRowClick($event)"  -->
 <dx-data-grid *ngIf="contacts$ | async as contacts" [dataSource]="contacts" height="100%"
     noDataText="אין אנשים" [showBorders]="false" (onRowClick)="onRowClick($event)">
     <dxo-search-panel [visible]="true" [width]="340" placeholder="חיפוש..."></dxo-search-panel>
