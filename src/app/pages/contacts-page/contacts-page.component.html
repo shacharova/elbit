@@ -1,44 +1,48 @@
-<dx-data-grid *ngIf="contacts$ | async as contacts" [dataSource]="contacts" height="100%" noDataText="אין אנשים"
-    [showBorders]="false" (onRowClick)="onRowClick($event)">
+<div class="content">
+    <dx-data-grid *ngIf="contacts$ | async as contacts" [dataSource]="contacts" height="100%" noDataText="אין אנשים"
+        [showBorders]="false" (onRowClick)="onRowClick($event)">
 
-    <ng-container *ngIf="screenWidth$ | async as width">
-        <dxo-toolbar>
-            <dxi-item location="before" name="searchPanel"></dxi-item>
-            <dxi-item location="after">
-                <div *dxTemplate class="informer">
-                    <dx-button icon="plus" [text]="width > 560 ? 'יצירת איש קשר' : ''" [routerLink]="['/contact']">
-                    </dx-button>
-                </div>
-            </dxi-item>
-        </dxo-toolbar>
+        <ng-container *ngIf="screenWidth$ | async as width">
+            <dxo-toolbar>
+                <dxi-item location="before" name="searchPanel"></dxi-item>
+                <dxi-item location="after">
+                    <div *dxTemplate class="informer">
+                        <dx-button icon="plus" [text]="width > 560 ? 'יצירת איש קשר' : ''" [routerLink]="['/contact']">
+                        </dx-button>
+                    </div>
+                </dxi-item>
+            </dxo-toolbar>
 
-        <dxo-search-panel [visible]="true" [width]="width > 560 ? 340 : 240" placeholder="חיפוש...">
-        </dxo-search-panel>
-    </ng-container>
+            <dxo-search-panel [visible]="true" [width]="width > 560 ? 340 : 240" placeholder="חיפוש...">
+            </dxo-search-panel>
+        </ng-container>
 
-    <dxi-column cellTemplate="nameCellTemplate" alignment="start" caption="שם" [allowSearch]="true"
-        [calculateCellValue]="calcNameColumnValue"></dxi-column>
-    <dxi-column dataField="birthDate" dataType="date" format="dd/MM/yyyy" caption="תאריך לידה" alignment="start"
-        [allowSearch]="false">
-    </dxi-column>
-    <dxi-column caption="" cellTemplate="actionsCellTemplate" [width]="80" [allowSearch]="false"></dxi-column>
+        <dxi-column cellTemplate="nameCellTemplate" alignment="start" caption="שם" [allowSearch]="true"
+            [calculateCellValue]="calcNameColumnValue"></dxi-column>
+        <dxi-column dataField="birthDate" dataType="date" format="dd/MM/yyyy" width="100" caption="תאריך לידה" alignment="start"
+            [allowSearch]="false">
+        </dxi-column>
+        <dxi-column caption="" cellTemplate="actionsCellTemplate" [width]="80" [allowSearch]="false"></dxi-column>
 
-    <div *dxTemplate="let cell of 'nameCellTemplate'">
-        <span class="picture">
-            <img *ngIf="cell.data.pictureSrc" [src]="cell.data.pictureSrc" />
-            <span *ngIf="!cell.data.pictureSrc">{{cell.data.firstName[0]}}{{cell.data.lastName[0]}}</span>
-        </span>
-        <span class="full-name">{{cell.data.firstName}} {{cell.data.lastName}}</span>
-    </div>
+        <div *dxTemplate="let cell of 'nameCellTemplate'" class="name-cell">
+            <span class="picture">
+                <img *ngIf="cell.data.pictureSrc" [src]="cell.data.pictureSrc" />
+                <span *ngIf="!cell.data.pictureSrc">{{cell.data.firstName[0]}}{{cell.data.lastName[0]}}</span>
+            </span>
+            <span class="full-name">{{cell.data.firstName}} {{cell.data.lastName}}</span>
+        </div>
 
-    <div *dxTemplate="let cell of 'actionsCellTemplate'" class="actions">
-        <dx-button icon="edit" stylingMode="text" (onClick)="onEditClick(cell.data.id, $event)">
-        </dx-button>
-        <dx-button icon="trash" [activeStateEnabled]="false" stylingMode="text"
-            (onClick)="onTrashClick(cell.data.id, $event)">
-        </dx-button>
-    </div>
-</dx-data-grid>
+        <div *dxTemplate="let cell of 'actionsCellTemplate'" class="actions">
+            <dx-button icon="edit" stylingMode="text" (onClick)="onEditClick(cell.data.id, $event)">
+            </dx-button>
+            <dx-button icon="trash" [activeStateEnabled]="false" stylingMode="text"
+                (onClick)="onTrashClick(cell.data.id, $event)">
+            </dx-button>
+        </div>
+    </dx-data-grid>
+</div>
+
+
 
 <confirm-popup [visible]="isShowDeleteConfirm" (onCancel)="isShowDeleteConfirm = false"
     (onOk)="onDeleteContactConfirmed()" okText="מחיקה" [contentTemplate]="confirmMessageTemplate"
