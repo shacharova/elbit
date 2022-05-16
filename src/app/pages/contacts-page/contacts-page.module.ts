@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { ContactsPageRoutingModule } from './contacts-page-routing.module';
 import { ContactsComponent } from './contacts-page.component';
 import { DxButtonModule, DxDataGridModule } from 'devextreme-angular';
-import { ContactsQuery, ContactsStore } from 'src/app/services/states/contacts.state';
 import { ConfirmPopupModule } from 'src/app/controls/confirm-popup/confirm-popup.module';
 
 
