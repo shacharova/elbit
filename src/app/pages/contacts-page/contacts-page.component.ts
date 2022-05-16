@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import DevExpress from 'devextreme';
+import { AppQuery } from 'src/app/services/states/app.state';
 import { IContact } from 'src/app/services/states/contact.state';
 import { ContactsQuery } from 'src/app/services/states/contacts.state';
 
@@ -13,10 +14,10 @@ export class ContactsComponent implements OnInit {
   private selectedContactId?: string;
 
   public isShowDeleteConfirm: boolean = false;
-
   public contacts$ = this.state.select(s => s.contacts)
+  public screenWidth$ = this.appState.select(s => s.screenWidth);
 
-  constructor(private state: ContactsQuery, private router: Router) { }
+  constructor(private state: ContactsQuery, private appState: AppQuery, private router: Router) { }
 
   ngOnInit(): void {
     this.state.loadContacts();
@@ -46,5 +47,9 @@ export class ContactsComponent implements OnInit {
   public onRowClick(event: DevExpress.ui.dxDataGrid.RowClickEvent) {
     const cotnact = event.data as IContact;
     this.router.navigate([`/contact/${cotnact.id}`]);
+  }
+
+  public onNewContactClick() {
+
   }
 }

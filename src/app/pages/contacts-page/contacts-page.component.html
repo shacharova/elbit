@@ -1,6 +1,20 @@
-<dx-data-grid *ngIf="contacts$ | async as contacts" [dataSource]="contacts" height="100%"
-    noDataText="אין אנשים" [showBorders]="false" (onRowClick)="onRowClick($event)">
-    <dxo-search-panel [visible]="true" [width]="340" placeholder="חיפוש..."></dxo-search-panel>
+<dx-data-grid *ngIf="contacts$ | async as contacts" [dataSource]="contacts" height="100%" noDataText="אין אנשים"
+    [showBorders]="false" (onRowClick)="onRowClick($event)">
+
+    <ng-container *ngIf="screenWidth$ | async as width">
+        <dxo-toolbar>
+            <dxi-item location="before" name="searchPanel"></dxi-item>
+            <dxi-item location="after">
+                <div *dxTemplate class="informer">
+                    <dx-button icon="plus" [text]="width > 560 ? 'יצירת איש קשר' : ''" [routerLink]="['/contact']">
+                    </dx-button>
+                </div>
+            </dxi-item>
+        </dxo-toolbar>
+
+        <dxo-search-panel [visible]="true" [width]="width > 560 ? 340 : 240" placeholder="חיפוש...">
+        </dxo-search-panel>
+    </ng-container>
 
     <dxi-column cellTemplate="nameCellTemplate" alignment="start" caption="שם" [allowSearch]="true"
         [calculateCellValue]="calcNameColumnValue"></dxi-column>
