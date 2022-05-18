@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RouterQuery } from '@datorama/akita-ng-router-store';
 import DevExpress from 'devextreme';
 import { DxFormComponent } from 'devextreme-angular';
@@ -37,7 +37,8 @@ export class ContactComponent implements OnInit, OnDestroy {
   constructor(private state: ContactQuery,
     private contactsState: ContactsQuery,
     private activatedRoute: ActivatedRoute,
-    private routerQuery: RouterQuery) {
+    private routerQuery: RouterQuery,
+    private router: Router) {
   }
   ngOnInit(): void {
     this.routerQuery.selectQueryParams('edit').pipe(takeUntil(this.destroySubject$))
@@ -81,7 +82,11 @@ export class ContactComponent implements OnInit, OnDestroy {
     if (isValid && this.editableContact) {
       const currentState = this.state.getValue();
       if (currentState.isChanged && currentState.isEditing) {
-        this.state.saveContact(this.editableContact);
+        this.state.saveContact(this.editableContact).subscribe({
+          next: () => {
+            this.router.navigate(['contacts']);
+          }
+        });
       }
     }
   }

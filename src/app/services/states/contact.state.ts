@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
 import { Query } from '@datorama/akita';
+import { tap } from 'rxjs';
 import { ContactsApiService } from 'src/app/services/apis/contacts-api.service';
 import { AppQuery } from 'src/app/services/states/app.state';
 import { ContactsQuery } from 'src/app/services/states/contacts.state';
@@ -56,26 +57,28 @@ export class ContactQuery extends Query<ContactState> {
     }
     public saveContact(contact: Partial<IContact>) {
         this.store.setLoading(true);
-        this.contactsApi.upsertContact(contact).subscribe({
-            next: (savedContactId) => {
-                if (contact.id === savedContactId) {
-                    this.store.update({ contact: contact });
-                    this.appState.setToast('איש הקשר עודכן בהצלחה', 'success');
-                } else {
-                    if (contact.id) {
-                        this.contactsState.removeContact(contact.id);
+        return this.contactsApi.upsertContact(contact).pipe(
+            tap({
+                next: (savedContactId) => {
+                    if (contact.id === savedContactId) {
+                        this.store.update({ contact: contact });
+                        this.appState.setToast('איש הקשר עודכן בהצלחה', 'success');
+                    } else {
+                        if (contact.id) {
+                            this.contactsState.removeContact(contact.id);
+                        }
+                        this.contactsState.addContact({ ...contact, id: savedContactId });
+                        this.appState.setToast('איש הקשר נוצר בהצלחה', 'success');
                     }
-                    this.contactsState.addContact({ ...contact, id: savedContactId });
-                    this.appState.setToast('איש הקשר נוצר בהצלחה', 'success');
+                },
+                error: this.store.setError,
+                complete: () => {
+                    this.store.setLoading(false);
+                    this.setIsEditing(false);
+                    this.setIsChanged(false);
                 }
-            },
-            error: this.store.setError,
-            complete: () => {
-                this.store.setLoading(false);
-                this.setIsEditing(false);
-                this.setIsChanged(false);
-            }
-        });
+            })
+        );
     }
 
     public setIsEditing(isEditing: boolean) {
