@@ -60,13 +60,14 @@ export class ContactQuery extends Query<ContactState> {
             next: (savedContactId) => {
                 if (contact.id === savedContactId) {
                     this.store.update({ contact: contact });
+                    this.appState.setToast('איש הקשר עודכן בהצלחה', 'success');
                 } else {
                     if (contact.id) {
                         this.contactsState.removeContact(contact.id);
                     }
                     this.contactsState.addContact({ ...contact, id: savedContactId });
+                    this.appState.setToast('איש הקשר נוצר בהצלחה', 'success');
                 }
-                this.appState.setToast('איש הקשר עודכן בהצלחה', 'success');
             },
             error: this.store.setError,
             complete: () => {
