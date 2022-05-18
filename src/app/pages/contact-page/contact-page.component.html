@@ -5,7 +5,12 @@
         </div>
         <div class="picture">
             <img *ngIf="contact.pictureSrc" [src]="contact.pictureSrc" />
-            <span *ngIf="!contact.pictureSrc">{{contact.firstName?.[0]}}{{contact.lastName?.[0]}}</span>
+            <ng-container *ngIf="!contact.pictureSrc && (contact.firstName || contact.lastName) ; else defaultPicture">
+                <span>{{contact.firstName?.[0]}}{{contact.lastName?.[0]}}</span>
+            </ng-container>
+            <ng-template #defaultPicture>
+                <i class="icon dx-icon-user"></i>
+            </ng-template>
         </div>
         <div class="details">
             <span class="full-name">{{contact.firstName}} {{contact.lastName}}</span>
