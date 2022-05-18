@@ -78,5 +78,6 @@ export class ContactsQuery extends Query<ContactsState> {
             this.store.update({contacts: contacts});
         }
     }
+y
     
 }
