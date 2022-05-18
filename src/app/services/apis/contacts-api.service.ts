@@ -37,7 +37,7 @@ export class ContactsApiService {
       firstName: contact.firstName,
       lastName: contact.lastName,
       birthDate: contact.birthDate ? Timestamp.fromDate(contact.birthDate) : undefined,
-      created: contact.created ? Timestamp.fromDate(contact.created) : undefined
+      created: Timestamp.fromDate(contact.created || new Date())
     };
     return contactDM;
   }
