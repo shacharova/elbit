@@ -57,13 +57,15 @@ export class ContactComponent implements OnInit, OnDestroy {
 
 
   private setContactById(newContactId: string) {
-    const contactId = this.state.getValue().contact?.id;
-    if (!contactId || contactId !== newContactId) {
-      const contact = this.contactsState.getContact(newContactId);
-      if (contact) {
-        this.state.update(contact);
-      } else {
-        this.state.loadContact(newContactId);
+    if (newContactId) {
+      const contactId = this.state.getValue().contact?.id;
+      if (!contactId || contactId !== newContactId) {
+        const contact = this.contactsState.getContact(newContactId);
+        if (contact) {
+          this.state.update(contact);
+        } else {
+          this.state.loadContact(newContactId);
+        }
       }
     }
   }
