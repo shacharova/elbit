@@ -7,13 +7,15 @@
                 <dxi-item location="before" name="searchPanel"></dxi-item>
                 <dxi-item location="after">
                     <div *dxTemplate class="informer">
-                        <dx-button icon="plus" [text]="width > 560 ? 'יצירת איש קשר' : ''" [routerLink]="['/contact']">
+                        <dx-button icon="plus" [text]="width > 560 ? 'יצירת איש קשר' : ''"
+                            [routerLink]="['/contact']" [queryParams]="{edit: 1}">
                         </dx-button>
                     </div>
                 </dxi-item>
             </dxo-toolbar>
 
-            <dxo-search-panel [visible]="true" [width]="width > 560 ? 340 : 240" placeholder="חיפוש...">
+            <dxo-search-panel [visible]="true" [width]="width > 560 ? 340 : 240"
+                    placeholder="חיפוש...">
             </dxo-search-panel>
         </ng-container>
 
