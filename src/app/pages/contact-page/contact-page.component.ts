@@ -1,7 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { RouterQuery } from '@datorama/akita-ng-router-store';
 import DevExpress from 'devextreme';
+import { DxFormComponent } from 'devextreme-angular';
 import { distinctUntilChanged, map, Subject, takeUntil, tap } from 'rxjs';
 import { ContactQuery, IContact } from 'src/app/services/states/contact.state';
 import { ContactsQuery } from 'src/app/services/states/contacts.state';
@@ -19,7 +20,7 @@ export class ContactComponent implements OnInit, OnDestroy {
   );
 
 
-
+  public nowDate: Date = new Date();
   public isLoading$ = this.state.selectLoading();
   public isEditing$ = this.state.select(s => s.isEditing);
   public isChanged$ = this.state.select(s => s.isChanged);
@@ -29,6 +30,8 @@ export class ContactComponent implements OnInit, OnDestroy {
     tap(contact => { this.editableContact = { ...contact }; })
   );
 
+
+  @ViewChild('dxForm') dxForm?: DxFormComponent;
 
 
   constructor(private state: ContactQuery,
@@ -72,7 +75,8 @@ export class ContactComponent implements OnInit, OnDestroy {
   }
 
   public onSaveClicked(event: DevExpress.ui.dxButton.ClickEvent) {
-    if (this.editableContact) {
+    const isValid = this.dxForm?.instance.validate()?.isValid;
+    if (isValid && this.editableContact) {
       const currentState = this.state.getValue();
       if (currentState.isChanged && currentState.isEditing) {
         this.state.saveContact(this.editableContact);

@@ -38,8 +38,10 @@
             <dxi-item dataField="lastName">
                 <dxo-label text="שם משפחה"> </dxo-label>
             </dxi-item>
-            <dxi-item dataField="birthDate">
+            <dxi-item dataField="birthDate" editorType="dxDateBox"
+                [editorOptions]="{displayFormat: 'dd/MM/yyyy', applyButtonText: 'אישור', cancelButtonText: 'ביטול', invalidDateMessage: 'יש להזין תאריך חוקי'}">
                 <dxo-label text="תאריך לידה"> </dxo-label>
+                <dxi-validation-rule type="range" [max]="nowDate" message="תאריך לא חוקי"></dxi-validation-rule>
             </dxi-item>
         </dx-form>
     </div>
