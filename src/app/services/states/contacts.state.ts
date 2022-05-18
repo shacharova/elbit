@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
 import { Query } from '@datorama/akita';
 import { ContactsApiService } from 'src/app/services/apis/contacts-api.service';
+import { AppQuery } from 'src/app/services/states/app.state';
 import { IContact } from 'src/app/services/states/contact.state';
 
 
@@ -22,7 +23,9 @@ export class ContactsStore extends Store<ContactsState> {
 @Injectable({ providedIn: 'root' })
 export class ContactsQuery extends Query<ContactsState> {
 
-    constructor(protected override store: ContactsStore, private contactsApi: ContactsApiService) {
+    constructor(protected override store: ContactsStore,
+        private contactsApi: ContactsApiService,
+        private appState: AppQuery) {
         super(store);
     }
 
@@ -42,13 +45,14 @@ export class ContactsQuery extends Query<ContactsState> {
         this.contactsApi.deleteContact(contectId).subscribe({
             next: (deletedId) => {
                 this.removeContact(deletedId);
+                this.appState.setToast('איש הקשר נמחק בהצלחה', 'success');
             },
             error: this.store.setError,
             complete: () => this.store.setLoading(false)
         });
     }
 
-
+    
 
     /** Get contact (by id) from state or undefined if NOT exists */
     public getContact(contactId: string): IContact | undefined {
@@ -74,5 +78,6 @@ export class ContactsQuery extends Query<ContactsState> {
             this.store.update({contacts: contacts});
         }
     }
+y
     
 }
