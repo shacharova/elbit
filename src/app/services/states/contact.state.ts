@@ -17,7 +17,7 @@ export interface IContact {
 export interface ContactState {
     isEditing: boolean,
     isChanged: boolean,
-    contact?: IContact
+    contact: IContact
 }
 
 @StoreConfig({ name: 'contact' })
@@ -25,7 +25,8 @@ export class ContactStore extends Store<ContactState> {
     constructor() {
         const initState: ContactState = {
             isEditing: false,
-            isChanged: false
+            isChanged: false,
+            contact: {}
         };
         super(initState);
     }
