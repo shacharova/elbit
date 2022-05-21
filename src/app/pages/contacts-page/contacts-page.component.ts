@@ -13,9 +13,10 @@ import { ContactsQuery } from 'src/app/services/states/contacts.state';
 export class ContactsComponent implements OnInit {
   private selectedContactId?: string;
 
-  public isShowDeleteConfirm: boolean = false;
-  public contacts$ = this.state.select(s => s.contacts)
   public screenWidth$ = this.appState.select(s => s.screenWidth);
+  public isLoading$ = this.state.selectLoading();
+  public contacts$ = this.state.select(s => s.contacts)
+  public isShowDeleteConfirm: boolean = false;
 
   constructor(private state: ContactsQuery, private appState: AppQuery, private router: Router) { }
 
