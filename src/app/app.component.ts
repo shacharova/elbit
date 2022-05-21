@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, HostListener, OnInit, Renderer2 } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, NgZone, OnInit, Renderer2 } from '@angular/core';
+import { akitaDevtools } from '@datorama/akita';
 import { distinctUntilChanged } from 'rxjs';
 import { AppQuery } from 'src/app/services/states/app.state';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +18,11 @@ export class AppComponent implements OnInit {
     this.state.notifyWindowSizeChanged();
   }
 
-  public constructor(private state: AppQuery, private renderer: Renderer2) { }
+  public constructor(private state: AppQuery, private renderer: Renderer2, private ngZone: NgZone) {
+    if (!environment.production) {
+      akitaDevtools(this.ngZone);
+    }
+  }
 
   ngOnInit(): void {
     this.handleIsRTLChanged();
