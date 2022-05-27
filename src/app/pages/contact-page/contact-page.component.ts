@@ -52,6 +52,7 @@ export class ContactComponent implements OnInit, OnDestroy {
       });
   }
   ngOnDestroy(): void {
+    this.state.setContact({});
     this.destroySubject$.next();
     this.destroySubject$.unsubscribe();
   }
@@ -63,7 +64,7 @@ export class ContactComponent implements OnInit, OnDestroy {
       if (!contactId || contactId !== newContactId) {
         const contact = this.contactsState.getContact(newContactId);
         if (contact) {
-          this.state.update(contact);
+          this.state.setContact(contact);
         } else {
           this.state.loadContact(newContactId);
         }

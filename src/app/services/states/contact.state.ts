@@ -43,7 +43,7 @@ export class ContactQuery extends Query<ContactState> {
         super(store);
     }
 
-    public update(newContact: IContact) {
+    public setContact(newContact: IContact) {
         this.store.update({ contact: newContact });
     }
 
