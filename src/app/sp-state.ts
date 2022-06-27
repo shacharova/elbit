@@ -2,7 +2,7 @@ import { BehaviorSubject, distinctUntilChanged, map, Observable } from "rxjs";
 
 export class SpState<TState = any> {
     private initialState: TState;
-    private state: BehaviorSubject<TState>;
+    private state: BehaviorSubject<Readonly<TState>>;
 
     constructor(initialState: TState) {
         this.initialState = initialState;
