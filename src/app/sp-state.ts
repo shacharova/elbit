@@ -15,8 +15,8 @@ export class SpState<TState = any> {
 
     public select(): Observable<Readonly<TState>>;
     public select<K extends keyof TState>(key: K): Observable<Readonly<TState[K]>>;
-    public select<R>(arg: (store: TState) => R): Observable<R>;
-    public select<R>(arg?: keyof TState | ((store: TState) => R)) {
+    public select<R>(arg: (store: TState) => R): Observable<Readonly<R>>;
+    public select<R>(arg?: keyof TState | ((store: TState) => Readonly<R>)) {
         const stateObs = this.state.asObservable().pipe(distinctUntilChanged());
         if (typeof (arg) === 'function') {
             return stateObs.pipe(map(arg));
