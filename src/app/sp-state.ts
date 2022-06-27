@@ -9,12 +9,12 @@ export class SpState<TState = any> {
         this.state = new BehaviorSubject(initialState);
     }
 
-    public getValue(): TState {
+    public getValue(): Readonly<TState> {
         return this.state.getValue();
     }
 
-    public select(): Observable<TState>;
-    public select<K extends keyof TState>(key: K): Observable<TState[K]>;
+    public select(): Observable<Readonly<TState>>;
+    public select<K extends keyof TState>(key: K): Observable<Readonly<TState[K]>>;
     public select<R>(arg: (store: TState) => R): Observable<R>;
     public select<R>(arg?: keyof TState | ((store: TState) => R)) {
         const stateObs = this.state.asObservable().pipe(distinctUntilChanged());
