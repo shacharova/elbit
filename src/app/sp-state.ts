@@ -8,7 +8,7 @@ export class SpState<TState = any> {
     private options?: Partial<ISpStateOptions>;
 
     constructor(initialState: TState, options?: Partial<ISpStateOptions>) {
-		this.options = options;
+        this.options = options;
         this.initialState = initialState;
         this.setNewState(Object.assign({}, initialState));
     }
